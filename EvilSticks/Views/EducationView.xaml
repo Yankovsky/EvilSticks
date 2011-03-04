@@ -19,7 +19,7 @@
                                 Command="{Binding RunEducationalGamesCommand}" CommandParameter="{Binding Path=Value, ElementName=EducationalGamesCounter}" />
         </StackPanel>
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />
-        <TextBlock Text="AI Statistics" Style="{StaticResource SectionTitleStyle}" />
+        <TextBlock Text="{Binding EducatedAIPlayer.Name}" Style="{StaticResource SectionTitleStyle}" />
         <Grid>
             <TextBlock Text="Total Games: " Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left" />
             <TextBlock Text="{Binding EducatedAIPlayer.GamesCount}" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Right" />

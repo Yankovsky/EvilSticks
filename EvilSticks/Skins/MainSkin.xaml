@@ -40,15 +40,6 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Rectangle" x:Key="DividerStyle" >
-        <Setter Property="Margin" Value="10" />
-        <Setter Property="Fill" Value="GhostWhite" />
-        <Setter Property="MinWidth" Value="5" />
-        <Setter Property="MinHeight" Value="5" />
-        <Setter Property="RadiusX" Value="5" />
-        <Setter Property="RadiusY" Value="5" />
-    </Style>
-
     <Style TargetType="Border" x:Key="MainArea">
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="Background" Value="Black" />

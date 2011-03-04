@@ -2,6 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:EvilSticks.Controls"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+             xmlns:converters="clr-namespace:EvilSticks.Converters"
              xmlns:views="clr-namespace:EvilSticks.Views"
              xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +12,7 @@
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
     <Border Style="{StaticResource MainArea}" >
-        <controls:BotsDuelBusyIndicator IsBusy="{Binding IsBusy}" >
+        <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -39,6 +41,6 @@
                     <views:GameView Grid.Column="2" />
                 </Grid>
             </Grid>
-        </controls:BotsDuelBusyIndicator>
+        </toolkit:BusyIndicator>
     </Border>
 </UserControl>

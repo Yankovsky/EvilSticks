@@ -5,5 +5,5 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600"  >
-    <Rectangle Style="{StaticResource DividerStyle}" />
+    <Rectangle Margin="10" Fill="GhostWhite" MinHeight="5" MinWidth="5" RadiusX="5" RadiusY="5" />
 </UserControl>

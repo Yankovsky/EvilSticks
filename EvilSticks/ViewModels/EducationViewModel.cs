@@ -62,8 +62,6 @@ namespace EvilSticks.ViewModels
                         for (int i = 0; i < educationalGamesCount; i++)
                         {
                             var game = new GameViewModel() { FirstPlayer = firstAI, SecondPlayer = secondAI };
-                            //Messenger.Default.Send<AIPlayer>(firstAI, Tokens.FirstPlayer);
-                            //Messenger.Default.Send<AIPlayer>(secondAI, Tokens.SecondPlayer);
                             game.Start();
                         }
                     });
