@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="EvilSticks.Views.EducationView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:input="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+    xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="100" d:DesignWidth="200" >
+    <UserControl.DataContext>
+        <viewModels:EducationViewModel />
+    </UserControl.DataContext>
+    <StackPanel Orientation="Vertical" >
+        <TextBlock Text="AI Education" Style="{StaticResource HeaderStyle}" />        
+        <StackPanel Orientation="Horizontal" Grid.Row="0" >
+            <TextBlock Grid.Column="0" Text="Games count" Style="{StaticResource TextBoxStyle}" VerticalAlignment="Center" />
+            <input:NumericUpDown Grid.Column="1" x:Name="EducationalGamesCounter" Margin="5" Foreground="GhostWhite"
+                                             Minimum="0" Maximum="1000000" Increment="100" Width="100"  />
+            <Button Grid.Column="2" Content="Run" Style="{StaticResource RoundButtonStyle}"
+                                Command="{Binding RunEducationalGamesCommand}" CommandParameter="{Binding Path=Value, ElementName=EducationalGamesCounter}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>
