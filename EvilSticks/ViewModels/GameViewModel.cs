@@ -96,6 +96,7 @@ namespace EvilSticks.ViewModels
                         SticksCount -= sticksToRemoveCount;
                     else
                     {
+                        SticksCount = 0;
                         Messenger.Default.Send(new NotificationMessage("GameEnded"));
                     }
                 });
@@ -104,7 +105,6 @@ namespace EvilSticks.ViewModels
 
         public void Start()
         {
-
         }
         
     }

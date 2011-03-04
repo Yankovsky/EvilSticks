@@ -1,9 +1,7 @@
-﻿using System;
+﻿using System.Windows;
+using EvilSticks.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Messaging;
-using EvilSticks.Model;
-using GalaSoft.MvvmLight.Threading;
-using System.Windows;
 
 namespace EvilSticks.ViewModels
 {
@@ -11,6 +9,11 @@ namespace EvilSticks.ViewModels
     {
         public MainViewModel()
         {
+            if (IsInDesignMode)
+            {
+                ViewModelLocator.CreateEducation();
+                ViewModelLocator.CreateGame();
+            }
             Messenger.Default.Register<Messages>(this, (message) =>
                 {
                     if (message == Messages.EducationStarted)

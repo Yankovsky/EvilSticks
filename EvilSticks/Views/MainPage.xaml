@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:EvilSticks.Controls"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
-             xmlns:converters="clr-namespace:EvilSticks.Converters"
              xmlns:views="clr-namespace:EvilSticks.Views"
              xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,7 +11,7 @@
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
     <Border Style="{StaticResource MainArea}" >
-        <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" >
+        <controls:BotsDuelBusyIndicator IsBusy="{Binding IsBusy}" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -36,11 +35,11 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <views:EducationView Grid.Column="0" />
+                    <views:EducationView Grid.Column="0" DataContext="{Binding Education, Source={StaticResource Locator}}" />
                     <controls:Divider Grid.Column="1" VerticalAlignment="Stretch" />
-                    <views:GameView Grid.Column="2" />
+                    <views:GameView Grid.Column="2" DataContext="{Binding Game, Source={StaticResource Locator}}" />
                 </Grid>
             </Grid>
-        </toolkit:BusyIndicator>
+        </controls:BotsDuelBusyIndicator>
     </Border>
 </UserControl>

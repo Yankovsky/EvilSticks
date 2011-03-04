@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" />
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding SticksCount, Converter={StaticResource IntToArrayConverter}}" HorizontalAlignment="Right" >
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding SticksCount, Converter={StaticResource IntToArrayConverter}}" HorizontalAlignment="Center" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />

@@ -1,71 +1,145 @@
-﻿namespace EvilSticks.ViewModels
+﻿using GalaSoft.MvvmLight;
+
+namespace EvilSticks.ViewModels
 {
+    
     public class ViewModelLocator
     {
+        private static MainViewModel _main;
+        private static EducationViewModel _education;
+        private static GameViewModel _game;
 
-        #region Bindable ViewModels Instances
-
-        public MainViewModel Main
+        public ViewModelLocator()
         {
-            get
+            if (ViewModelBase.IsInDesignModeStatic)
             {
-                return _mainStatic;
+                CreateMain();
+                CreateEducation();
+                CreateGame();
             }
+            else
+            {
+                // Create run time view models
+            }
+
+            CreateMain();
+            CreateEducation();
+            CreateGame();
         }
 
-        public EducationViewModel Education
-        {
-            get
-            {
-                return _educationStatic;
-            }
-        }
-
-        public GameViewModel Game
-        {
-            get
-            {
-                return _gameStatic;
-            }
-        }
-
-        #endregion
-
-        #region Static Properties Holding ViewModels Instances
-
-        private static MainViewModel _mainStatic
+        public static MainViewModel MainStatic
         {
             get
             {
                 if (_main == null)
-                    _main = new MainViewModel();
+                {
+                    CreateMain();
+                }
+
                 return _main;
             }
         }
 
-        private static EducationViewModel _educationStatic
+        public static EducationViewModel EducationStatic
         {
             get
             {
                 if (_education == null)
-                    _education = new EducationViewModel();
+                {
+                    CreateEducation();
+                }
+
                 return _education;
             }
         }
 
-        private static GameViewModel _gameStatic
+        public static GameViewModel GameStatic
         {
             get
             {
                 if (_game == null)
-                    _game = new GameViewModel();
+                {
+                    CreateGame();
+                }
+
                 return _game;
             }
         }
 
-        #endregion
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public MainViewModel Main
+        {
+            get
+            {
+                return MainStatic;
+            }
+        }
 
-        #region Clean Up
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public EducationViewModel Education
+        {
+            get
+            {
+                return EducationStatic;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public GameViewModel Game
+        {
+            get
+            {
+                return GameStatic;
+            }
+        }
+
+        public static void ClearMain()
+        {
+            _main.Cleanup();
+            _main = null;
+        }
+
+        public static void ClearEducation()
+        {
+            _education.Cleanup();
+            _education = null;
+        }
+
+        public static void ClearGame()
+        {
+            _game.Cleanup();
+            _game = null;
+        }
+
+        public static void CreateMain()
+        {
+            if (_main == null)
+            {
+                _main = new MainViewModel();
+            }
+        }
+
+        public static void CreateEducation()
+        {
+            if (_education == null)
+            {
+                _education = new EducationViewModel();
+            }
+        }
+
+        public static void CreateGame()
+        {
+            if (_game == null)
+            {
+                _game = new GameViewModel();
+            }
+        }
 
         public static void Cleanup()
         {
@@ -73,34 +147,5 @@
             ClearEducation();
             ClearGame();
         }
-
-        private static void ClearMain()
-        {
-            _main.Cleanup();
-            _main = null;
-        }
-
-        private static void ClearEducation()
-        {
-            _education.Cleanup();
-            _education = null;
-        }
-
-        private static void ClearGame()
-        {
-            _game.Cleanup();
-            _game = null;
-        }
-
-        #endregion
-
-        #region Private Fields
-
-        private static MainViewModel _main;
-        private static EducationViewModel _education;
-        private static GameViewModel _game;
-
-        #endregion
-
     }
 }

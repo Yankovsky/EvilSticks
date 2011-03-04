@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="Model\BotNames.cs" />
     <Compile Include="Tokens.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\EducationView.xaml.cs">
       <DependentUpon>EducationView.xaml</DependentUpon>
     </Compile>
@@ -126,7 +127,6 @@
     <Compile Include="ViewModels\EducationViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
