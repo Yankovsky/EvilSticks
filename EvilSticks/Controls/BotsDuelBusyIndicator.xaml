@@ -1,0 +1,32 @@
+﻿<toolkit:BusyIndicator x:Class="EvilSticks.Controls.BotsDuelBusyIndicator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="400" d:DesignWidth="600" >
+    <toolkit:BusyIndicator.BusyContentTemplate>
+        <DataTemplate>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" >
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding FirstAIPlayer}" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left" />
+                    <TextBlock Grid.Row="0" Text="Bots Duel" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Right" />
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </toolkit:BusyIndicator.BusyContentTemplate>
+    <toolkit:BusyIndicator.OverlayStyle>
+        <Style TargetType="Rectangle">
+            <Setter Property="Fill" Value="Black"/>
+        </Style>
+    </toolkit:BusyIndicator.OverlayStyle>
+</toolkit:BusyIndicator>

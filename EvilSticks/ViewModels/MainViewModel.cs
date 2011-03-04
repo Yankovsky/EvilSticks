@@ -1,49 +1,48 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using EvilSticks.Model;
+using GalaSoft.MvvmLight.Threading;
+using System.Windows;
 
 namespace EvilSticks.ViewModels
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm/getstarted
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
-        public string Welcome
+        public MainViewModel()
+        {
+            Messenger.Default.Register<Messages>(this, (message) =>
+                {
+                    if (message == Messages.EducationStarted)
+                        IsBusy = true;
+                });
+            Messenger.Default.Register<AIPlayer>(this, Tokens.EducationEnded, (player) =>
+                {
+                    MessageBox.Show(player.Name + " win!");
+                    IsBusy = false;
+                });
+        }
+
+        #region Public Properties
+
+        private bool _isBusy;
+        public bool IsBusy
         {
             get
             {
-                return "Welcome to MVVM Light";
+                return _isBusy;
+            }
+            set
+            {
+                if (_isBusy != value)
+                {
+                    _isBusy = value;
+                    RaisePropertyChanged("IsBusy");
+                }
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel()
-        {
-            if (IsInDesignMode)
-            {
-                // Code runs in Blend --> create design time data.
-            }
-            else
-            {
-                // Code runs "for real"
-            }
-        }
+        #endregion
 
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
-
-        ////    base.Cleanup();
-        ////}
     }
 }

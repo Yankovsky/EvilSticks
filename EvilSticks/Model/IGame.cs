@@ -1,20 +1,14 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Collections.Generic;
+﻿using System.Windows.Input;
+using EvilSticks.Model;
 
 namespace EvilSticks
 {
     public interface IGame
     {
+        Player FirstPlayer { get; set; }
+        Player SecondPlayer { get; set; }
         int SticksCount { get; set; }
         void Start();
+        ICommand RemoveSticksCommand { get; }
     }
 }

@@ -5,27 +5,38 @@ using EvilSticks.ViewModels;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using System.Threading;
+using System.ComponentModel;
+using GalaSoft.MvvmLight.Threading;
 
 namespace EvilSticks.ViewModels
 {
     public class EducationViewModel : ViewModelBase
     {
 
+        public EducationViewModel()
+        {
+            if (IsInDesignMode)
+            {
+                EducatedAIPlayer = new AIPlayer(BotNames.GetRandom()) { GamesCount = 1000, WinsCount = 100 };
+            }
+        }
+
         #region Public Properties
 
-        private double _educationalGamesCount;
-        public double EducationalGamesCount
+        private AIPlayer _educatedAIPlayer;
+        public AIPlayer EducatedAIPlayer
         {
             get
             {
-                return _educationalGamesCount;
+                return _educatedAIPlayer;
             }
             set
             {
-                if (_educationalGamesCount != value)
+                if (_educatedAIPlayer != value)
                 {
-                    _educationalGamesCount = value;
-                    RaisePropertyChanged("EducationalGamesCount");
+                    _educatedAIPlayer = value;
+                    RaisePropertyChanged("EducatedAIPlayer");
                 }
             }
         }
@@ -38,23 +49,38 @@ namespace EvilSticks.ViewModels
         {
             get
             {
-                return new RelayCommand(() =>
+                return new RelayCommand<double>((educationalGamesCount) =>
                 {
-                    MessengerInstance.Send(new NotificationMessage("EducationStarted"));
-                    var firstAI = new AIPlayer();
-                    var secondAI = new AIPlayer();
-                    for (int i = 0; i < EducationalGamesCount; i++)
+                    var firstAI = new AIPlayer(BotNames.GetRandom());
+                    var secondAI = new AIPlayer(BotNames.GetRandom());
+
+                    Messenger.Default.Send<Messages, MainViewModel>(Messages.EducationStarted);
+
+                    var worker = new BackgroundWorker();
+                    worker.DoWork += new DoWorkEventHandler((sender, e) =>
                     {
-                        var game = new GameViewModel(firstAI, secondAI);
-                        game.Start();
-                    }
-                    var educatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
-                    MessengerInstance.Send(new NotificationMessage<AIPlayer>(educatedAIPlayer, "EducationEnded"));
+                        for (int i = 0; i < educationalGamesCount; i++)
+                        {
+                            var game = new GameViewModel() { FirstPlayer = firstAI, SecondPlayer = secondAI };
+                            //Messenger.Default.Send<AIPlayer>(firstAI, Tokens.FirstPlayer);
+                            //Messenger.Default.Send<AIPlayer>(secondAI, Tokens.SecondPlayer);
+                            game.Start();
+                        }
+                    });
+
+                    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler((sender, e) =>
+                    {
+                        EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
+                        Messenger.Default.Send<AIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                    });
+
+                    worker.RunWorkerAsync();
                 });
             }
         }
 
         #endregion
+
     }
 
 }

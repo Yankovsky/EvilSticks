@@ -1,8 +1,8 @@
 ﻿namespace EvilSticks
 {
-    public static class Messages
+    public enum Messages
     {
-        public static string EducationStarted = "EducationStarted";
-        public static string EducationEnded = "EducationEnded";
+        EducationStarted,
+        EducationEnded
     }
 }
