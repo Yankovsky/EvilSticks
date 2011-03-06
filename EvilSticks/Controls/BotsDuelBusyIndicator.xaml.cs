@@ -14,23 +14,23 @@ namespace EvilSticks.Controls
 
         #region Dependency Properties
 
-        public AIPlayer FirstAIPlayer
+        public SticksAIPlayer FirstAIPlayer
         {
-            get { return (AIPlayer)GetValue(FirstAIPlayerProperty); }
+            get { return (SticksAIPlayer)GetValue(FirstAIPlayerProperty); }
             set { SetValue(FirstAIPlayerProperty, value); }
         }
 
         public static readonly DependencyProperty FirstAIPlayerProperty =
-            DependencyProperty.Register("FirstAIPlayer", typeof(AIPlayer), typeof(BotsDuelBusyIndicator), new PropertyMetadata(null));
+            DependencyProperty.Register("FirstAIPlayer", typeof(SticksAIPlayer), typeof(BotsDuelBusyIndicator), new PropertyMetadata(null));
 
-        public AIPlayer SecondAIPlayer
+        public SticksAIPlayer SecondAIPlayer
         {
-            get { return (AIPlayer)GetValue(SecondAIPlayerProperty); }
+            get { return (SticksAIPlayer)GetValue(SecondAIPlayerProperty); }
             set { SetValue(SecondAIPlayerProperty, value); }
         }
 
         public static readonly DependencyProperty SecondAIPlayerProperty =
-            DependencyProperty.Register("SecondAIPlayer", typeof(AIPlayer), typeof(BotsDuelBusyIndicator), new PropertyMetadata(null));
+            DependencyProperty.Register("SecondAIPlayer", typeof(SticksAIPlayer), typeof(BotsDuelBusyIndicator), new PropertyMetadata(null));
         
         #endregion
 

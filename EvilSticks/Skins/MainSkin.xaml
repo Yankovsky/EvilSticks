@@ -5,6 +5,7 @@
     <Style TargetType="TextBlock" x:Key="TextBlockStyle" >
         <Setter Property="Margin" Value="5" />
         <Setter Property="Foreground" Value="GhostWhite" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
     <Style TargetType="TextBlock" x:Key="StickStyle" BasedOn="{StaticResource TextBlockStyle}" >
@@ -14,7 +15,6 @@
 
     <Style TargetType="TextBlock" x:Key="SectionTitleStyle" BasedOn="{StaticResource TextBlockStyle}" >
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
     
     <Style TargetType="TextBlock" x:Key="HeaderStyle" BasedOn="{StaticResource TextBlockStyle}" >
@@ -53,6 +53,13 @@
         <Setter Property="MinWidth" Value="5" />
         <Setter Property="RadiusX" Value="5" />
         <Setter Property="RadiusY" Value="5" />
+        <Setter Property="Fill" Value="GhostWhite" />
+    </Style>
+
+    <Style TargetType="Ellipse" x:Key="IsPlayerTurnIndicatorStyle" >
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Width" Value="10" />
+        <Setter Property="Height" Value="10" />
         <Setter Property="Fill" Value="GhostWhite" />
     </Style>
 

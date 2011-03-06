@@ -35,9 +35,9 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <views:EducationView Grid.Column="0" DataContext="{Binding Education, Source={StaticResource Locator}}" />
+                    <views:EducationView Grid.Column="0" d:DataContext="{Binding Education, Source={StaticResource Locator}}" />
                     <controls:Divider Grid.Column="1" VerticalAlignment="Stretch" />
-                    <views:GameView Grid.Column="2" DataContext="{Binding Game, Source={StaticResource Locator}}" />
+                    <views:GameView Grid.Column="2" d:DataContext="{Binding Game, Source={StaticResource Locator}}" />
                 </Grid>
             </Grid>
         </controls:BotsDuelBusyIndicator>

@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvilSticks", "EvilSticks\Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EvilSticks.Web", "EvilSticks.Web\EvilSticks.Web.csproj", "{61D708A2-0FA8-4EC1-9532-CFC975838B55}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{836EF855-4A8D-4BE9-B057-51F939F85B3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{61D708A2-0FA8-4EC1-9532-CFC975838B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61D708A2-0FA8-4EC1-9532-CFC975838B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61D708A2-0FA8-4EC1-9532-CFC975838B55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{836EF855-4A8D-4BE9-B057-51F939F85B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{836EF855-4A8D-4BE9-B057-51F939F85B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{836EF855-4A8D-4BE9-B057-51F939F85B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{836EF855-4A8D-4BE9-B057-51F939F85B3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

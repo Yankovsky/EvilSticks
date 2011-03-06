@@ -11,20 +11,6 @@ namespace EvilSticks.ViewModels
 
         public ViewModelLocator()
         {
-            if (ViewModelBase.IsInDesignModeStatic)
-            {
-                CreateMain();
-                CreateEducation();
-                CreateGame();
-            }
-            else
-            {
-                // Create run time view models
-            }
-
-            CreateMain();
-            CreateEducation();
-            CreateGame();
         }
 
         public static MainViewModel MainStatic

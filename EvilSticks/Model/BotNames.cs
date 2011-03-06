@@ -26,7 +26,7 @@ namespace EvilSticks.Model
 
         private static Random _random = new Random();
         private static string[] _names = new string[] { "IVAN", "VASILISA", "PARASHKA", "ROZA", "FEKLA", "AGLAYA", "ANFISA", "AGATA", "LADA", "AVDOTYA", "STEPA" };
-        private static string[] _modificators = new string[] { "-2000", "~Me", "~XP", "~4G", ".NET", ".ru", "7", "1.1", "№1", "(C)", "+", "666", "777", ".AI", ".Bot" };
+        private static string[] _modificators = new string[] { "-2000", "~Me", " XP", " 4G", ".NET", ".ru", "7", "1.1", " №1", "(C)", "+", "666", "777", ".AI", ".Bot" };
         private static int _namesCount;
         private static int _modificatorsCount;
     }
