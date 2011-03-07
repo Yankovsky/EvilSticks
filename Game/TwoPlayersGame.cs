@@ -18,7 +18,7 @@ namespace Game
         public Player FirstPlayer { get; private set; }
         public Player SecondPlayer { get; private set; }
 
-        protected sealed override Player SwitchToPlayer()
+        protected override Player SwitchToPlayer()
         {
             return CurrentPlayer == FirstPlayer ? SecondPlayer : FirstPlayer;
         }
