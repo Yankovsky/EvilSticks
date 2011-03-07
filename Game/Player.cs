@@ -11,17 +11,18 @@ namespace Game
 
         public event EventHandler<GameStateChangedEventArgs> MoveMade;
 
-        public void OnMoveMade(object sender, GameStateChangedEventArgs e)
+        public abstract void MakeMove();
+
+        public void OnMoveMade(object move)
         {
             if (MoveMade != null)
-                MoveMade(this, e);
+                MoveMade(this, new GameStateChangedEventArgs(move));
         }
 
+        public Game Game { get; internal set; }
         public string Name { get; private set; }
         public double WinsCount { get; internal set; }
         public int GamesCount { get; internal set; }
-
-        public abstract void MakeMove();
 
     }
 }

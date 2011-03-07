@@ -33,7 +33,8 @@
                     <TextBlock Grid.Column="0" Text="{Binding FirstPlayer.Name}" Style="{StaticResource TextBlockStyle}" />
                     <TextBlock Grid.Column="1" Text="{Binding FirstPlayer.WinsCount}" Style="{StaticResource TextBlockStyle}" />
                 </Grid>
-                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}" />
+                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource TrueToVisibilityConverter}}" />
             </Grid>
             <Grid Grid.Column="2" >
                 <Grid.RowDefinitions>
@@ -48,7 +49,8 @@
                     <TextBlock Grid.Column="0" Text="{Binding SecondPlayer.WinsCount}" Style="{StaticResource TextBlockStyle}" />
                     <TextBlock Grid.Column="1" Text="{Binding SecondPlayer.Name}" Style="{StaticResource TextBlockStyle}" />
                 </Grid>
-                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}" />
+                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource FalseToVisibilityConverter}}" />
             </Grid>
         </Grid>        
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />

@@ -9,8 +9,10 @@ namespace Game
         {
             FirstPlayer = firstPlayer;
             FirstPlayer.MoveMade += OnPlayerMadeTurn;
+            FirstPlayer.Game = this;
             SecondPlayer = secondPlayer;
             SecondPlayer.MoveMade += OnPlayerMadeTurn;
+            SecondPlayer.Game = this;
         }
 
         public Player FirstPlayer { get; private set; }
@@ -20,22 +22,20 @@ namespace Game
         {
             return CurrentPlayer == FirstPlayer ? SecondPlayer : FirstPlayer;
         }
-
-        public event EventHandler<EventArgs> GameTottalyEnded;
-        protected sealed override void OnGameEnded(object sender, EventArgs e)
+        
+        protected sealed override void OnGameEnding(GameResult result)
         {
             FirstPlayer.GamesCount++;
             SecondPlayer.GamesCount++;
             FirstPlayer.MoveMade -= OnPlayerMadeTurn;
             SecondPlayer.MoveMade -= OnPlayerMadeTurn;
-            if (Result == GameResult.WinnerExist)
+            if (result == GameResult.WinnerExist)
                 CurrentPlayer.WinsCount++;
-            else
+            else if (result == GameResult.Draw)
             {
                 FirstPlayer.WinsCount += 0.5;
                 SecondPlayer.WinsCount += 0.5;
             }
-            GameTottalyEnded(this, EventArgs.Empty);
         }
     }
 }

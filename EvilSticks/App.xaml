@@ -12,6 +12,8 @@
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
                 <ResourceDictionary>
                     <converters:IntToArrayConverter x:Key="IntToArrayConverter" />
+                    <converters:TrueToVisibilityConverter x:Key="TrueToVisibilityConverter" />
+                    <converters:FalseToVisibilityConverter x:Key="FalseToVisibilityConverter" />
                     <!--Global View Model Locator-->
                     <viewModels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
                 </ResourceDictionary>

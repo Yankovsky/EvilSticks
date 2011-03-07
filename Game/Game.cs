@@ -12,43 +12,53 @@ namespace Game
 
         public void Start()
         {
-            GameEnded += OnGameEnded;
             CurrentPlayer.MakeMove();
         }
 
         public Player CurrentPlayer { get; private set; }
-        public event EventHandler<EventArgs> GameEnded;
+        public event EventHandler<GameEndedEventArgs> GameEnded;
+        public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
 
         protected void OnPlayerMadeTurn(object sender, GameStateChangedEventArgs e)
         {
-            CurrentPlayer = SwitchToPlayer();
             ChangeGameState(e);
             if (AreWinConditionsPerformed())
-            {
-                Result = GameResult.WinnerExist;
-                GameEnded(this, EventArgs.Empty);
-            }
-            else if (this is IDrawable)
-            {
-                if ((this as IDrawable).AreDrawConditionsPerformed())
-                {
-                    Result = GameResult.Draw;
-                    GameEnded(this, EventArgs.Empty);
-                }
-            }
+                EndGame(GameResult.WinnerExist);
+            else if (AreDrawConditionsPerformed())
+                EndGame(GameResult.Draw);
             else
+            {
+                CurrentPlayer = SwitchToPlayer();
                 CurrentPlayer.MakeMove();
+            }
         }
 
-        protected abstract void ChangeGameState(GameStateChangedEventArgs e);
+        private void ChangeGameState(GameStateChangedEventArgs e)
+        {
+            OnGameStateChanging(e.Move);
+            if (GameStateChanged != null)
+                GameStateChanged(this, e);
+        }
+
+        private void EndGame(GameResult result)
+        {
+            OnGameEnding(result);
+            if (GameEnded != null)
+                GameEnded(this, new GameEndedEventArgs(result));
+        }
+
+        protected abstract void OnGameStateChanging(object move);
+
+        protected abstract void OnGameEnding(GameResult result);
 
         protected abstract Player SwitchToPlayer();
 
         protected abstract bool AreWinConditionsPerformed();
 
-        protected abstract void OnGameEnded(object sender, EventArgs e);
-
-        protected GameResult Result;  
-
+        protected virtual bool AreDrawConditionsPerformed()
+        {
+            return false;
+        }
+        
     }
 }

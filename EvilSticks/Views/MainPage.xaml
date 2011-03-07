@@ -11,7 +11,7 @@
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
     <Border Style="{StaticResource MainArea}" >
-        <controls:BotsDuelBusyIndicator IsBusy="{Binding IsBusy}" >
+        <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" >
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -40,6 +40,6 @@
                     <views:GameView Grid.Column="2" d:DataContext="{Binding Game, Source={StaticResource Locator}}" />
                 </Grid>
             </Grid>
-        </controls:BotsDuelBusyIndicator>
+        </toolkit:BusyIndicator>
     </Border>
 </UserControl>

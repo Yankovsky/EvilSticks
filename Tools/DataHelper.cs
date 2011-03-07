@@ -9,15 +9,15 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace EvilSticks.Tools
+namespace Tools
 {
-    public static class BoolTools
+    public static class DataHelper
     {
-        public static bool GetRandomBool()
+        public static T GetRandomElement<T>(params T[] objects)
         {
             var random = new Random();
-            var boolean = random.Next(0, 2) == 0 ? false : true;
-            return boolean;
+            var randomIndex = random.Next(objects.GetLowerBound(0), objects.GetUpperBound(0) + 1);
+            return objects[randomIndex];
         }
     }
 }

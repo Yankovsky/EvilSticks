@@ -94,6 +94,8 @@
     <Compile Include="Controls\BotsDuelBusyIndicator.xaml.cs">
       <DependentUpon>BotsDuelBusyIndicator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\FalseToVisibilityConverter.cs" />
+    <Compile Include="Converters\TrueToVisibilityConverter.cs" />
     <Compile Include="Messages.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -105,9 +107,7 @@
     <Compile Include="Model\SticksAIPlayer.cs" />
     <Compile Include="Model\BotNames.cs" />
     <Compile Include="Model\SticksGame.cs" />
-    <Compile Include="Model\SticksPlayer.cs" />
     <Compile Include="Tokens.cs" />
-    <Compile Include="Tools\BoolTools.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\EducationView.xaml.cs">
       <DependentUpon>EducationView.xaml</DependentUpon>
@@ -172,10 +172,15 @@
       <Project>{836EF855-4A8D-4BE9-B057-51F939F85B3F}</Project>
       <Name>Game</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Tools\Tools.csproj">
+      <Project>{37F91628-D4B2-4E32-A510-C01904F17810}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -3,13 +3,12 @@ using System;
 
 namespace EvilSticks.Model
 {
-    public class SticksHumanPlayer : SticksPlayer
+    public sealed class SticksHumanPlayer : Player
     {
         public SticksHumanPlayer(string name) : base(name) { }
 
         public override void MakeMove()
         {
         }
-
     }
 }

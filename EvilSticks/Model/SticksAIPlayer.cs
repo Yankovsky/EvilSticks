@@ -1,17 +1,29 @@
-﻿using Game;
+﻿using System.ComponentModel;
+using System.Threading;
+using Game;
 
 namespace EvilSticks.Model
 {
-    public class SticksAIPlayer : SticksPlayer
+    public sealed class SticksAIPlayer : AIPlayer
     {
-        public SticksAIPlayer(string name) : base(name) { }
+        public SticksAIPlayer(string name, int latency) : base(name, latency) { }
 
         public int[] Boxes { get; private set; }
 
         public override void MakeMove()
         {
-            //TODO AILOGIC
-            OnMoveMade(this, new GameStateChangedEventArgs(1));
+            var worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler((sender, e) =>
+                {
+                    Thread.Sleep(_latency);
+                });
+            worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler((sender, e) =>
+            {
+                var a = ((SticksGame)Game).SticksCount;
+                var move = 1;
+                OnMoveMade(move);
+            });
+            worker.RunWorkerAsync();
         }
 
     }

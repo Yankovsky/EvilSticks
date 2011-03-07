@@ -4,6 +4,8 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Game;
+using System;
+using System.Windows;
 
 namespace EvilSticks.ViewModels
 {
@@ -13,12 +15,17 @@ namespace EvilSticks.ViewModels
         {
             if (IsInDesignMode)
             {
-                FirstPlayer = new SticksHumanPlayer("Andrey");
-                SecondPlayer = new SticksAIPlayer("Bot");
                 _game = new SticksGame(FirstPlayer, SecondPlayer, SecondPlayer, 11);
             }
             else
             {
+                var a = new SticksAIPlayer("BOt", 1000);
+                var b = new SticksHumanPlayer("Human");
+                _game = new SticksGame(a, b, a, 11);
+                _game.GameStateChanged += OnGameStateChanged;
+                _game.GameEnded += OnGameEnded;
+                _game.Start();
+                /*
                 Messenger.Default.Register<SticksPlayer>(this, Tokens.FirstPlayer, (firstPlayer) =>
                 {
                     FirstPlayer = firstPlayer;
@@ -27,45 +34,58 @@ namespace EvilSticks.ViewModels
                 {
                     SecondPlayer = secondPlayer;
                 });
+                 * */
             }
+        }
+
+        void OnGameEnded(object sender, GameEndedEventArgs e)
+        {
+            MessageBox.Show(_game.CurrentPlayer.ToString());
+        }
+
+        void OnGameStateChanged(object sender, GameStateChangedEventArgs e)
+        {
+            RaisePropertyChanged("SticksCount");
+            RaisePropertyChanged("IsFirstPlayerTurn");
         }
 
         #region Public Properties
 
-        public SticksPlayer FirstPlayer
+        public Player FirstPlayer
         {
             get
             {
-                return (SticksPlayer)_game.FirstPlayer;
+                return _game != null ? _game.FirstPlayer : null;
             }
         }
 
-        public SticksPlayer SecondPlayer
+        public Player SecondPlayer
         {
             get
             {
-                return (SticksPlayer)_game.SecondPlayer;
+                return _game != null ? _game.SecondPlayer : null;
             }
         }
 
-        private int _sticksCount;
+        public bool IsFirstPlayerTurn
+        {
+            get
+            {
+                return _game != null && _game.CurrentPlayer == _game.FirstPlayer ? true : false;
+            }
+        }
+
         public int SticksCount
         {
             get
             {
-                return _sticksCount;
-            }
-            set
-            {
-                if (_sticksCount != value)
-                {
-                    _sticksCount = value;
-                    RaisePropertyChanged("SticksCount");
-                }
+                return _game != null ? _game.SticksCount : 0;
             }
         }
 
         #endregion
+
+        #region Commands
 
         public ICommand RemoveSticksCommand
         {
@@ -74,12 +94,14 @@ namespace EvilSticks.ViewModels
                 return new RelayCommand<string>((param) =>
                 {
                     var sticksToRemoveCount = int.Parse(param);
-                    _game.CurrentPlayer.OnMoveMade(this, new GameStateChangedEventArgs(sticksToRemoveCount));
+                    _game.CurrentPlayer.OnMoveMade(sticksToRemoveCount);
                 });
             }
         }
 
-        #region
+        #endregion
+
+        #region Private Fields
 
         private SticksGame _game;
 
