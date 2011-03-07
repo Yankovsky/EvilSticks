@@ -9,17 +9,12 @@ namespace EvilSticks.ViewModels
     {
         public MainViewModel()
         {
-            if (IsInDesignMode)
-            {
-                ViewModelLocator.CreateEducation();
-                ViewModelLocator.CreateGame();
-            }
             Messenger.Default.Register<Messages>(this, (message) =>
                 {
                     if (message == Messages.EducationStarted)
                         IsBusy = true;
                 });
-            Messenger.Default.Register<AIPlayer>(this, Tokens.EducationEnded, (player) =>
+            Messenger.Default.Register<SticksAIPlayer>(this, Tokens.EducationEnded, (player) =>
                 {
                     MessageBox.Show(player.Name + " win!");
                     IsBusy = false;

@@ -15,9 +15,47 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding FirstPlayer.Name}" Style="{StaticResource TextBlockStyle}" />
+                    <TextBlock Grid.Column="1" Text="{Binding FirstPlayer.WinsCount}" Style="{StaticResource TextBlockStyle}" />
+                </Grid>
+                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource TrueToVisibilityConverter}}" />
+            </Grid>
+            <Grid Grid.Column="2" >
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{Binding SecondPlayer.WinsCount}" Style="{StaticResource TextBlockStyle}" />
+                    <TextBlock Grid.Column="1" Text="{Binding SecondPlayer.Name}" Style="{StaticResource TextBlockStyle}" />
+                </Grid>
+                <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource FalseToVisibilityConverter}}" />
+            </Grid>
+        </Grid>        
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />
-        <ItemsControl Grid.Row="2" ItemsSource="{Binding SticksCount, Converter={StaticResource IntToArrayConverter}}" HorizontalAlignment="Center" >
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding SticksCount, Converter={StaticResource IntToArrayConverter}}"
+                      HorizontalAlignment="Center" VerticalAlignment="Center" >
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" />
@@ -29,7 +67,7 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" >
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" >
             <Button Grid.Column="0" Style="{StaticResource RoundButtonStyle}" Content="1" Command="{Binding RemoveSticksCommand}" CommandParameter="1" />
             <Button Grid.Column="1" Style="{StaticResource RoundButtonStyle}" Content="2" Command="{Binding RemoveSticksCommand}" CommandParameter="2" />
         </StackPanel>

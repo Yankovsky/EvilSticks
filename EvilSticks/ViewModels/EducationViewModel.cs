@@ -1,13 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Input;
 using EvilSticks.Model;
-using EvilSticks.ViewModels;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
-using System.Threading;
-using System.ComponentModel;
-using GalaSoft.MvvmLight.Threading;
+using Game;
+using Tools;
 
 namespace EvilSticks.ViewModels
 {
@@ -18,14 +17,14 @@ namespace EvilSticks.ViewModels
         {
             if (IsInDesignMode)
             {
-                EducatedAIPlayer = new AIPlayer(BotNames.GetRandom()) { GamesCount = 1000, WinsCount = 100 };
+                EducatedAIPlayer = new SticksAIPlayer(BotNames.GetRandom(), 1000);
             }
         }
 
         #region Public Properties
 
-        private AIPlayer _educatedAIPlayer;
-        public AIPlayer EducatedAIPlayer
+        private SticksAIPlayer _educatedAIPlayer;
+        public SticksAIPlayer EducatedAIPlayer
         {
             get
             {
@@ -41,6 +40,23 @@ namespace EvilSticks.ViewModels
             }
         }
 
+        private int _totalEducationalGamesCount;
+        public int TotalEducationalGamesCount
+        {
+            get
+            {
+                return _totalEducationalGamesCount;
+            }
+            set
+            {
+                if (_totalEducationalGamesCount != value)
+                {
+                    _totalEducationalGamesCount = value;
+                    RaisePropertyChanged("TotalEducationalGamesCount");
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
@@ -49,30 +65,49 @@ namespace EvilSticks.ViewModels
         {
             get
             {
-                return new RelayCommand<double>((educationalGamesCount) =>
+                return new RelayCommand(() =>
                 {
-                    var firstAI = new AIPlayer(BotNames.GetRandom());
-                    var secondAI = new AIPlayer(BotNames.GetRandom());
+                    int _currentEducationalGamesCount = 0;
+                    var firstAI = new SticksAIPlayer(BotNames.GetRandom(), 0);
+                    var secondAI = new SticksAIPlayer(BotNames.GetRandom(), 0);
 
                     Messenger.Default.Send<Messages, MainViewModel>(Messages.EducationStarted);
 
+                    /*
                     var worker = new BackgroundWorker();
                     worker.DoWork += new DoWorkEventHandler((sender, e) =>
                     {
-                        for (int i = 0; i < educationalGamesCount; i++)
+                        for (int i = 0; i < TotalEducationalGamesCount; i++)
                         {
-                            var game = new GameViewModel() { FirstPlayer = firstAI, SecondPlayer = secondAI };
+                            var currentPlayer = DataHelper.GetRandomElement(firstAI, secondAI);
+                            var game = new SticksGame(firstAI, secondAI, currentPlayer, 11);
+                            game.GameEnded += new EventHandler<GameEndedEventArgs>((sender2, e2) =>
+                            {
+                                if (++_currentEducationalGamesCount == _totalEducationalGamesCount)
+                                {
+                                    EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;                                    
+                                    Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                                }
+                            });
                             game.Start();
                         }
                     });
-
-                    worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler((sender, e) =>
-                    {
-                        EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
-                        Messenger.Default.Send<AIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
-                    });
-
                     worker.RunWorkerAsync();
+                    */
+                    for (int i = 0; i < TotalEducationalGamesCount; i++)
+                    {
+                        var currentPlayer = DataHelper.GetRandomElement(firstAI, secondAI);
+                        var game = new SticksGame(firstAI, secondAI, currentPlayer, 11);
+                        game.GameEnded += new EventHandler<GameEndedEventArgs>((sender2, e2) =>
+                        {
+                            if (++_currentEducationalGamesCount == _totalEducationalGamesCount)
+                            {
+                                EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
+                                Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                            }
+                        });
+                        game.Start();
+                    }
                 });
             }
         }
