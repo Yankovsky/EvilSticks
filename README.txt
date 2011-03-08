@@ -1,4 +1,4 @@
-GIT
+cGIT
 
 для начала работы входим в Git Bash
 заходим в проект (для Саши cd Evil+Tab +Enter)
