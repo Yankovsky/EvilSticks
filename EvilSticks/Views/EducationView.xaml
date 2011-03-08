@@ -1,7 +1,7 @@
 ﻿<UserControl x:Class="EvilSticks.Views.EducationView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:controls="clr-namespace:Controls;assembly=Controls"
+             xmlns:controls="clr-namespace:EvilSticks.Controls"
              xmlns:input="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,7 +14,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" >
             <TextBlock Grid.Column="0" Text="Games count" Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" />
             <input:NumericUpDown Grid.Column="1" Margin="5" Foreground="GhostWhite" Value="{Binding TotalEducationalGamesCount, Mode=TwoWay}"
-                                 Minimum="0" Maximum="10000000" Increment="100" Width="100"  />
+                                 Minimum="1" Maximum="10000" Increment="1000" Width="100"  />
             <Button Grid.Column="2" Content="Run" Style="{StaticResource RoundButtonStyle}" Command="{Binding RunEducationalGamesCommand}" />
         </StackPanel>
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />

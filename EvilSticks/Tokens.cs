@@ -13,8 +13,9 @@ namespace EvilSticks
 {
     public enum Tokens
     {
-        FirstPlayer,
-        SecondPlayer,
-        EducationEnded
+        EducationStarted,
+        EducationEnded,
+        PlayerNameChanged,
+        MainPageLoaded
     }
 }

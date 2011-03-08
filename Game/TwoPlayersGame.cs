@@ -4,38 +4,35 @@ namespace Game
 {
     public abstract class TwoPlayerGame : Game
     {
-        public TwoPlayerGame(Player firstPlayer, Player secondPlayer, Player currentPlayer)
-            : base(currentPlayer)
-        {
-            FirstPlayer = firstPlayer;
-            FirstPlayer.MoveMade += OnPlayerMadeTurn;
-            FirstPlayer.Game = this;
-            SecondPlayer = secondPlayer;
-            SecondPlayer.MoveMade += OnPlayerMadeTurn;
-            SecondPlayer.Game = this;
-        }
+        #region Public Interface
 
-        public Player FirstPlayer { get; private set; }
-        public Player SecondPlayer { get; private set; }
+        public TwoPlayerGame(int currentPlayerIndex, Player firstPlayer, Player secondPlayer)
+            : base(currentPlayerIndex, firstPlayer, secondPlayer) { }
 
-        protected override Player SwitchToPlayer()
+        public Player FirstPlayer { get { return _players[0]; } }
+        public Player SecondPlayer { get { return _players[1]; } }
+        public bool IsFirstPlayerTurn { get { return CurrentPlayer == FirstPlayer; } }
+
+        #endregion
+
+        #region Override
+
+        protected override void SwitchToPlayer()
         {
-            return CurrentPlayer == FirstPlayer ? SecondPlayer : FirstPlayer;
+            _currentPlayerIndex = _players[_currentPlayerIndex] == FirstPlayer ? 1 : 0;
         }
         
         protected sealed override void OnGameEnding(GameResult result)
         {
-            FirstPlayer.GamesCount++;
-            SecondPlayer.GamesCount++;
-            FirstPlayer.MoveMade -= OnPlayerMadeTurn;
-            SecondPlayer.MoveMade -= OnPlayerMadeTurn;
             if (result == GameResult.WinnerExist)
-                CurrentPlayer.WinsCount++;
+                _players[_currentPlayerIndex].WinsCount++;
             else if (result == GameResult.Draw)
             {
                 FirstPlayer.WinsCount += 0.5;
                 SecondPlayer.WinsCount += 0.5;
             }
         }
+
+        #endregion
     }
 }

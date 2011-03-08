@@ -96,7 +96,6 @@
     </Compile>
     <Compile Include="Converters\FalseToVisibilityConverter.cs" />
     <Compile Include="Converters\TrueToVisibilityConverter.cs" />
-    <Compile Include="Messages.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -108,7 +107,11 @@
     <Compile Include="Model\BotNames.cs" />
     <Compile Include="Model\SticksGame.cs" />
     <Compile Include="Tokens.cs" />
+    <Compile Include="ViewModels\ChangePlayerNameDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\ChangePlayerNameDialogView.xaml.cs">
+      <DependentUpon>ChangePlayerNameDialogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EducationView.xaml.cs">
       <DependentUpon>EducationView.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
       <ContainsDesignTimeResources>true</ContainsDesignTimeResources>
+    </Page>
+    <Page Include="Views\ChangePlayerNameDialogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EducationView.xaml">
       <Generator>MSBuild:Compile</Generator>

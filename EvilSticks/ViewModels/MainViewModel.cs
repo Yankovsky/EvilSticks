@@ -1,6 +1,8 @@
 ﻿using System.Windows;
+using System.Windows.Input;
 using EvilSticks.Model;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 
 namespace EvilSticks.ViewModels
@@ -9,16 +11,28 @@ namespace EvilSticks.ViewModels
     {
         public MainViewModel()
         {
-            Messenger.Default.Register<Messages>(this, (message) =>
-                {
-                    if (message == Messages.EducationStarted)
-                        IsBusy = true;
-                });
+            _player = new SticksHumanPlayer("Unnamed");
+            InitializeCommands();
+            RegisterToMessages();
+        }
+
+        private void RegisterToMessages()
+        {
+            Messenger.Default.Register<Tokens>(this, (token) =>
+            {
+                if (token == Tokens.MainPageLoaded)
+                    ChangePlayerNameCommand.Execute(new object());
+            });
+            Messenger.Default.Register<Tokens>(this, (token) =>
+            {
+                if (token == Tokens.EducationStarted)
+                    IsBusy = true;
+            });
             Messenger.Default.Register<SticksAIPlayer>(this, Tokens.EducationEnded, (player) =>
-                {
-                    MessageBox.Show(player.Name + " win!");
-                    IsBusy = false;
-                });
+            {
+                MessageBox.Show(player.Name + " win!");
+                IsBusy = false;
+            });
         }
 
         #region Public Properties
@@ -39,6 +53,26 @@ namespace EvilSticks.ViewModels
                 }
             }
         }
+
+        #endregion
+
+        #region Commands
+
+        public ICommand ChangePlayerNameCommand { get; private set; }
+
+        private void InitializeCommands()
+        {
+            ChangePlayerNameCommand = new RelayCommand(() =>
+            {
+                Messenger.Default.Send<SticksHumanPlayer, MainPage>(_player);
+            });
+        }
+
+        #endregion
+
+        #region Private Fields
+
+        private SticksHumanPlayer _player;
 
         #endregion
 

@@ -4,10 +4,20 @@ namespace Game
 {
     public abstract class Game
     {
+        #region Public Interface
 
-        public Game(Player currentPlayer)
+        public Game(int currentPlayerIndex, params Player[] players)
         {
-            CurrentPlayer = currentPlayer;
+            if (currentPlayerIndex < players.GetLowerBound(0) || currentPlayerIndex > players.GetUpperBound(0))
+                throw new IndexOutOfRangeException("CurrentPlayerIndex cannot be negative or more than players count!");
+
+            _currentPlayerIndex = currentPlayerIndex;
+            _players = players;
+            foreach (var player in _players)
+            {
+                player.MoveMade += OnPlayerMadeTurn;
+                player.Game = this;
+            }
         }
 
         public void Start()
@@ -15,9 +25,19 @@ namespace Game
             CurrentPlayer.MakeMove();
         }
 
-        public Player CurrentPlayer { get; private set; }
+        public Player CurrentPlayer { get { return _players[_currentPlayerIndex]; } }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<EventArgs> MoveRequested;
         public event EventHandler<GameEndedEventArgs> GameEnded;
         public event EventHandler<GameStateChangedEventArgs> GameStateChanged;
+
+        #endregion
+
+        #region EventHadlers
 
         protected void OnPlayerMadeTurn(object sender, GameStateChangedEventArgs e)
         {
@@ -28,10 +48,16 @@ namespace Game
                 EndGame(GameResult.Draw);
             else
             {
-                CurrentPlayer = SwitchToPlayer();
+                SwitchToPlayer();
+                if (MoveRequested != null)
+                    MoveRequested(this, EventArgs.Empty);
                 CurrentPlayer.MakeMove();
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         private void ChangeGameState(GameStateChangedEventArgs e)
         {
@@ -42,16 +68,25 @@ namespace Game
 
         private void EndGame(GameResult result)
         {
+            foreach (var player in _players)
+            {
+                player.GamesCount++;
+                player.MoveMade -= OnPlayerMadeTurn;
+            }
             OnGameEnding(result);
             if (GameEnded != null)
                 GameEnded(this, new GameEndedEventArgs(result));
         }
+        
+        #endregion
+
+        #region Abstract and Virtual Methods
 
         protected abstract void OnGameStateChanging(object move);
 
         protected abstract void OnGameEnding(GameResult result);
 
-        protected abstract Player SwitchToPlayer();
+        protected abstract void SwitchToPlayer();
 
         protected abstract bool AreWinConditionsPerformed();
 
@@ -59,6 +94,14 @@ namespace Game
         {
             return false;
         }
-        
+
+        #endregion
+
+        #region Protected Members
+
+        protected Player[] _players { get; private set; }
+        protected int _currentPlayerIndex { get; set; }
+
+        #endregion
     }
 }

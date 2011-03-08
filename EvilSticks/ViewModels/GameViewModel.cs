@@ -6,6 +6,7 @@ using GalaSoft.MvvmLight.Messaging;
 using Game;
 using System;
 using System.Windows;
+using Tools;
 
 namespace EvilSticks.ViewModels
 {
@@ -14,64 +15,95 @@ namespace EvilSticks.ViewModels
         public GameViewModel()
         {
             if (IsInDesignMode)
-            {
-                _game = new SticksGame(FirstPlayer, SecondPlayer, SecondPlayer, 11);
-            }
+                _game = new SticksGame(11, 1, new SticksHumanPlayer("Player"), new SticksAIPlayer("Bot", 0));
             else
             {
-                var a = new SticksAIPlayer("BOt", 1000);
-                var b = new SticksHumanPlayer("Human");
-                _game = new SticksGame(a, b, a, 11);
-                _game.GameStateChanged += OnGameStateChanged;
-                _game.GameEnded += OnGameEnded;
-                _game.Start();
-                /*
-                Messenger.Default.Register<SticksPlayer>(this, Tokens.FirstPlayer, (firstPlayer) =>
-                {
-                    FirstPlayer = firstPlayer;
-                });
-                Messenger.Default.Register<SticksPlayer>(this, Tokens.SecondPlayer, (secondPlayer) =>
-                {
-                    SecondPlayer = secondPlayer;
-                });
-                 * */
+                InitializeCommands();
+                RegisterToMessages();
+                _educatedAIPlayer = new SticksAIPlayer(BotNames.GetRandom(), 1000);
             }
         }
 
+        private void RegisterToMessages()
+        {
+            Messenger.Default.Register<SticksHumanPlayer>(this, Tokens.PlayerNameChanged, (player) =>
+            {
+                if (_humanPlayer == null)
+                    _humanPlayer = player;
+                RaisePropertyChanged("HumanPlayerName");
+                (NewGameCommand as RelayCommand).RaiseCanExecuteChanged();
+            });
+            Messenger.Default.Register<SticksAIPlayer>(this, Tokens.EducationEnded, (educatedAIPlayer) =>
+            {
+                _educatedAIPlayer = educatedAIPlayer;
+                _educatedAIPlayer.ResetWinsCount();
+                RaisePropertyChanged("EducatedAIPlayerName");
+                (NewGameCommand as RelayCommand).RaiseCanExecuteChanged();
+            });
+        }
+
+        #region Event Handlers
+
         void OnGameEnded(object sender, GameEndedEventArgs e)
         {
-            MessageBox.Show(_game.CurrentPlayer.ToString());
+            MessageBox.Show(_game.CurrentPlayer.Name);
+            IsGameAlive = false;
+            RaisePropertyChanged("HumanPlayerWinsCount");
+            RaisePropertyChanged("EducatedAIPlayerWinsCount");
         }
 
         void OnGameStateChanged(object sender, GameStateChangedEventArgs e)
         {
             RaisePropertyChanged("SticksCount");
-            RaisePropertyChanged("IsFirstPlayerTurn");
         }
+
+        void OnMoveRequested(object sender, EventArgs e)
+        {
+            RaisePropertyChanged("IsFirstPlayerTurn");
+            (RemoveSticksCommand as RelayCommand<string>).RaiseCanExecuteChanged();
+        }   
+
+        #endregion
 
         #region Public Properties
 
-        public Player FirstPlayer
+        public string HumanPlayerName
         {
             get
             {
-                return _game != null ? _game.FirstPlayer : null;
+                return _humanPlayer != null ? _humanPlayer.Name : null;
             }
         }
 
-        public Player SecondPlayer
+        public double HumanPlayerWinsCount
         {
             get
             {
-                return _game != null ? _game.SecondPlayer : null;
+                return _humanPlayer != null ? _humanPlayer.WinsCount : 0.0;
             }
         }
 
-        public bool IsFirstPlayerTurn
+        public string EducatedAIPlayerName
         {
             get
             {
-                return _game != null && _game.CurrentPlayer == _game.FirstPlayer ? true : false;
+                return _educatedAIPlayer != null ? _educatedAIPlayer.Name : null;
+            }
+        }
+
+        public double EducatedAIPlayerWinsCount
+        {
+            get
+            {
+                return _educatedAIPlayer != null ? _educatedAIPlayer.WinsCount : 0.0;
+            }
+        }
+
+        public bool? IsFirstPlayerTurn
+        {
+            get
+            {
+                return _game != null ? (bool?)_game.IsFirstPlayerTurn : null;
             }
         }
 
@@ -83,20 +115,63 @@ namespace EvilSticks.ViewModels
             }
         }
 
+        private bool _isGameAlive;
+        public bool IsGameAlive
+        {          
+            get
+            {
+                return _isGameAlive;
+            }
+            set
+            {
+                if (_isGameAlive != value)
+                {
+                    _isGameAlive = value;
+                    RaisePropertyChanged("IsGameAlive");
+                }
+            }
+        }
+
         #endregion
 
         #region Commands
 
-        public ICommand RemoveSticksCommand
+        public ICommand NewGameCommand { get; private set; }
+        public ICommand RemoveSticksCommand { get; private set; }
+
+        private void InitializeCommands()
         {
-            get
+            NewGameCommand = new RelayCommand(() =>
             {
-                return new RelayCommand<string>((param) =>
-                {
-                    var sticksToRemoveCount = int.Parse(param);
-                    _game.CurrentPlayer.OnMoveMade(sticksToRemoveCount);
-                });
-            }
+                _game = new SticksGame(11, DataHelper.GetRandomElement(0, 1), _humanPlayer, _educatedAIPlayer);
+                _game.GameStateChanged += OnGameStateChanged;
+                _game.GameEnded += OnGameEnded;
+                _game.MoveRequested += OnMoveRequested;
+                IsGameAlive = true;
+
+                RaisePropertyChanged("HumanPlayerName");
+                RaisePropertyChanged("HumanPlayerWinsCount");
+                RaisePropertyChanged("EducatedAIPlayerName");
+                RaisePropertyChanged("EducatedAIPlayerWinsCount");
+                RaisePropertyChanged("IsFirstPlayerTurn");
+                RaisePropertyChanged("SticksCount");
+
+                (RemoveSticksCommand as RelayCommand<string>).RaiseCanExecuteChanged();
+
+                _game.Start();
+            }, () => {
+                return _humanPlayer != null && _educatedAIPlayer != null;
+            });
+
+            RemoveSticksCommand = new RelayCommand<string>((param) =>
+            {
+                var sticksToRemoveCount = int.Parse(param);
+                _game.CurrentPlayer.OnMoveMade(sticksToRemoveCount);
+            }, (param) =>
+            {
+                return _game != null ? _game.CurrentPlayer is SticksHumanPlayer : false; 
+            });
+
         }
 
         #endregion
@@ -104,6 +179,8 @@ namespace EvilSticks.ViewModels
         #region Private Fields
 
         private SticksGame _game;
+        private SticksHumanPlayer _humanPlayer;
+        private SticksAIPlayer _educatedAIPlayer;
 
         #endregion
 

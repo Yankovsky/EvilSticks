@@ -8,6 +8,7 @@ namespace EvilSticks.ViewModels
         private static MainViewModel _main;
         private static EducationViewModel _education;
         private static GameViewModel _game;
+        private static ChangePlayerNameDialogViewModel _changePlayerNameDialog;
 
         public ViewModelLocator()
         {
@@ -52,6 +53,19 @@ namespace EvilSticks.ViewModels
             }
         }
 
+        public static ChangePlayerNameDialogViewModel ChangePlayerNameDialogStatic
+        {
+            get
+            {
+                if (_changePlayerNameDialog == null)
+                {
+                    CreateChangePlayerNameDialog();
+                }
+
+                return _changePlayerNameDialog;
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
@@ -85,6 +99,17 @@ namespace EvilSticks.ViewModels
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
+            "CA1822:MarkMembersAsStatic",
+            Justification = "This non-static member is needed for data binding purposes.")]
+        public ChangePlayerNameDialogViewModel ChangePlayerNameDialog
+        {
+            get
+            {
+                return ChangePlayerNameDialogStatic;
+            }
+        }
+
         public static void ClearMain()
         {
             _main.Cleanup();
@@ -101,6 +126,12 @@ namespace EvilSticks.ViewModels
         {
             _game.Cleanup();
             _game = null;
+        }
+
+        public static void ClearChangePlayerNameDialog()
+        {
+            _changePlayerNameDialog.Cleanup();
+            _changePlayerNameDialog = null;
         }
 
         public static void CreateMain()
@@ -127,11 +158,20 @@ namespace EvilSticks.ViewModels
             }
         }
 
+        public static void CreateChangePlayerNameDialog()
+        {
+            if (_changePlayerNameDialog == null)
+            {
+                _changePlayerNameDialog = new ChangePlayerNameDialogViewModel();
+            }
+        }
+
         public static void Cleanup()
         {
             ClearMain();
             ClearEducation();
             ClearGame();
+            ClearChangePlayerNameDialog();
         }
     }
 }

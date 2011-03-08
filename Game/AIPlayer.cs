@@ -4,9 +4,15 @@
     {
         public AIPlayer(string name, int latency) : base(name)
         {
-            _latency = latency;
+            Latency = latency;
         }
 
-        protected int _latency;
+        public int Latency;
+
+        public void ResetWinsCount()
+        {
+            WinsCount = 0;
+        }
+
     }
 }

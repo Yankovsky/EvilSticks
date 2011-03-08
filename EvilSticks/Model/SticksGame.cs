@@ -4,8 +4,8 @@ namespace EvilSticks.Model
 {
     public sealed class SticksGame : TwoPlayerGame
     {
-        public SticksGame(Player firstPlayer, Player secondPlayer, Player currentPlayer, int sticksCount)
-            : base(firstPlayer, secondPlayer, currentPlayer)
+        public SticksGame(int sticksCount, int currentPlayerIndex, Player firstPlayer, Player secondPlayer)
+            : base(currentPlayerIndex, firstPlayer, secondPlayer)
         {
             SticksCount = sticksCount;
         }
