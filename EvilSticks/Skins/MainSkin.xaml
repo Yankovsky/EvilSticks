@@ -43,6 +43,8 @@
     </Style>
 
     <Style TargetType="Border" x:Key="MainAreaStyle" >
+        <Setter Property="Background" Value="Black" />
+        <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderThickness" Value="5" />
     </Style>

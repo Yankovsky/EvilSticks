@@ -11,7 +11,7 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
-    <Border Style="{StaticResource MainArea}" >
+    <Border Style="{StaticResource MainAreaStyle}" >
         <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" >
             <Grid>
                 <Grid.RowDefinitions>
