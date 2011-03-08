@@ -21,15 +21,21 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" >
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <controls:Divider Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Right" />
-                    <TextBlock Grid.Column="1" Text="Sticks" Style="{StaticResource HeaderStyle}" />
-                    <controls:Divider Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Left" />
-                    <Grid Grid.Column="3" >
+                    <Grid Grid.Row="0" >
+                        <MediaElement Volume="{Binding ElementName=VolumeSlider, Path=Value}" AutoPlay="True"
+                                      Source="/EvilSticks;component/Resources/Music/Developer.mp3" />
+                        <Slider Width="100" Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.5" />
+                    </Grid>
+                    <controls:Divider Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" />
+                    <TextBlock Grid.Column="2" Text="Sticks" Style="{StaticResource HeaderStyle}" />
+                    <controls:Divider Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Left" />
+                    <Grid Grid.Column="4" >
                         <Button Content="Change Name" Command="{Binding ChangePlayerNameCommand}" />
                     </Grid>
                 </Grid>

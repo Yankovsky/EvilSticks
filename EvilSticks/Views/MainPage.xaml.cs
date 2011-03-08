@@ -21,7 +21,7 @@ namespace EvilSticks
             });
         }
 
-        void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Messenger.Default.Send<Tokens, MainViewModel>(Tokens.MainPageLoaded);
         }

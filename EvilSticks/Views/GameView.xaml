@@ -32,7 +32,7 @@
                     <TextBlock Grid.Column="1" Text="{Binding HumanPlayerWinsCount}" Style="{StaticResource TextBlockStyle}" />
                 </Grid>
                 <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
-                            Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource TrueToVisibilityConverter}}" />
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource TrueToVisibilityConverter}}" />
             </Grid>
             <Grid Grid.Column="2" >
                 <Grid.RowDefinitions>
@@ -48,7 +48,7 @@
                     <TextBlock Grid.Column="1" Text="{Binding EducatedAIPlayerName}" Style="{StaticResource TextBlockStyle}" />
                 </Grid>
                 <Ellipse Grid.Row="1" Style="{StaticResource IsPlayerTurnIndicatorStyle}"
-                            Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource FalseToVisibilityConverter}}" />
+                         Visibility="{Binding IsFirstPlayerTurn, Converter={StaticResource FalseToVisibilityConverter}}" />
             </Grid>
         </Grid>
         <Grid Grid.Row="1" Visibility="{Binding IsGameAlive, Converter={StaticResource TrueToVisibilityConverter}}" >

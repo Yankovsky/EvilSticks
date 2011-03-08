@@ -6,6 +6,10 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Game;
 using Tools;
+using System.ComponentModel;
+using System.Threading;
+using System.Windows.Threading;
+using GalaSoft.MvvmLight.Threading;
 
 namespace EvilSticks.ViewModels
 {
@@ -71,48 +75,61 @@ namespace EvilSticks.ViewModels
                 var secondAI = new SticksAIPlayer(BotNames.GetRandom(), 0);
 
                 Messenger.Default.Send<Tokens, MainViewModel>(Tokens.EducationStarted);
-
                 /*
                 var worker = new BackgroundWorker();
                 worker.DoWork += new DoWorkEventHandler((sender, e) =>
                 {
                     for (int i = 0; i < TotalEducationalGamesCount; i++)
                     {
-                        var currentPlayer = DataHelper.GetRandomElement(firstAI, secondAI);
-                        var game = new SticksGame(firstAI, secondAI, currentPlayer, 11);
+                        var currentPlayerIndex = DataHelper.GetRandomElement(0, 1);
+                        var game = new SticksGame(11, currentPlayerIndex, firstAI, secondAI);
                         game.GameEnded += new EventHandler<GameEndedEventArgs>((sender2, e2) =>
                         {
                             if (++_currentEducationalGamesCount == _totalEducationalGamesCount)
                             {
-                                EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;                                    
-                                Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                                    {
+                                        EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
+                                        EducatedAIPlayer.Latency = 1000;
+                                        Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                                    });
                             }
                         });
                         game.Start();
                     }
                 });
-                worker.RunWorkerAsync();
-                */
-                for (int i = 0; i < TotalEducationalGamesCount; i++)
-                {
-                    var currentPlayerIndex = DataHelper.GetRandomElement(0, 1);
-                    var game = new SticksGame(11, currentPlayerIndex, firstAI, secondAI);
-                    game.GameEnded += new EventHandler<GameEndedEventArgs>((sender2, e2) =>
-                    {
-                        if (++_currentEducationalGamesCount == _totalEducationalGamesCount)
-                        {
-                            EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
-                            EducatedAIPlayer.Latency = 1000;
-                            Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
-                        }
-                    });
-                    game.Start();
-                }
+                worker.RunWorkerAsync();*/
+                RunEducationalGames(firstAI, secondAI);
+                    
             }, () =>
             {
                 return true;
             });
         }
+
+        private void RunEducationalGames(SticksAIPlayer firstAI, SticksAIPlayer secondAI)
+        {
+            var currentPlayerIndex = DataHelper.GetRandomElement(0, 1);
+            var game = new SticksGame(11, currentPlayerIndex, firstAI, secondAI);
+            game.GameEnded += new EventHandler<GameEndedEventArgs>((sender2, e2) =>
+            {
+                if (++_currentEducationalGamesCount == _totalEducationalGamesCount)
+                {
+                    EducatedAIPlayer = firstAI.WinsCount > secondAI.WinsCount ? firstAI : secondAI;
+                    EducatedAIPlayer.Latency = 1000;
+                    Messenger.Default.Send<SticksAIPlayer>(EducatedAIPlayer, Tokens.EducationEnded);
+                }
+                else
+                    RunEducationalGames(firstAI, secondAI);
+            });
+            game.Start();
+        }
+
+        #endregion
+
+        #region Private Fields
+
+        private int _currentEducationalGamesCount;
 
         #endregion
 

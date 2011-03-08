@@ -60,8 +60,8 @@
 
     <Style TargetType="Ellipse" x:Key="IsPlayerTurnIndicatorStyle" >
         <Setter Property="Margin" Value="5" />
-        <Setter Property="Width" Value="10" />
-        <Setter Property="Height" Value="10" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
         <Setter Property="Fill" Value="GhostWhite" />
     </Style>
 

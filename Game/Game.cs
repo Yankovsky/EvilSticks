@@ -18,6 +18,7 @@ namespace Game
                 player.MoveMade += OnPlayerMadeTurn;
                 player.Game = this;
             }
+            GameInitialized(this, EventArgs.Empty);
         }
 
         public void Start()
@@ -31,6 +32,7 @@ namespace Game
 
         #region Events
 
+        public event EventHandler<EventArgs> GameInitialized;
         public event EventHandler<EventArgs> MoveRequested;
         public event EventHandler<GameEndedEventArgs> GameEnded;
         public event EventHandler<GameStateChangedEventArgs> GameStateChanged;

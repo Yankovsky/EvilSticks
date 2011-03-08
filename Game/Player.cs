@@ -22,8 +22,23 @@ namespace Game
         public string Name { get; set; }
         public double WinsCount { get; internal set; }
         public int GamesCount { get; internal set; }
-        public Game Game { get; internal set; }
+        private Game game;
+        public Game Game
+        {
+            get
+            {
+                return game;
+            }
+            internal set
+            {
+                game = value;
+                Game.GameInitialized += OnGameStarted;
+            }
+        }
 
+        protected virtual void OnGameStarted(object sender, EventArgs e)
+        {
 
+        }
     }
 }
