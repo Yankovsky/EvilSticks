@@ -1,9 +1,8 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Windows.Input;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using System.Windows.Input;
 using GalaSoft.MvvmLight.Messaging;
-using EvilSticks.Model;
-using EvilSticks.Views;
+using Game;
 
 namespace EvilSticks.ViewModels
 {
@@ -23,7 +22,7 @@ namespace EvilSticks.ViewModels
         
         private void RegisterToMessages()
         {
-            Messenger.Default.Register<SticksHumanPlayer>(this, (player) =>
+            Messenger.Default.Register<Player>(this, (player) =>
             {
                 _player = player;
             });
@@ -57,7 +56,7 @@ namespace EvilSticks.ViewModels
         {
             SaveChangesCommand = new RelayCommand(() =>
             {
-                Messenger.Default.Send<SticksHumanPlayer>(_player, Tokens.PlayerNameChanged);
+                Messenger.Default.Send<Player>(_player, Tokens.PlayerNameChanged);
             });
         }
 
@@ -65,7 +64,7 @@ namespace EvilSticks.ViewModels
 
         #region Private Fields
 
-        private SticksHumanPlayer _player;
+        private Player _player;
 
         #endregion
 

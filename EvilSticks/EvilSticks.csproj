@@ -68,6 +68,9 @@
     <Reference Include="GalaSoft.MvvmLight.Extras.SL4">
       <HintPath>C:\Program Files\Laurent Bugnion (GalaSoft)\Mvvm Light Toolkit\Binaries\Silverlight4\GalaSoft.MvvmLight.Extras.SL4.dll</HintPath>
     </Reference>
+    <Reference Include="Game, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Libs\Game.dll</HintPath>
+    </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -102,6 +105,9 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Windows.Browser" />
+    <Reference Include="Tools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Libs\Tools.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\BotsDuelBusyIndicator.xaml.cs">
@@ -117,9 +123,10 @@
       <DependentUpon>Divider.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\SticksAIPlayer.cs" />
-    <Compile Include="Model\BotNames.cs" />
+    <Compile Include="Tools\BotNames.cs" />
     <Compile Include="Model\SticksGame.cs" />
     <Compile Include="Tokens.cs" />
+    <Compile Include="Tools\GameOverMessage.cs" />
     <Compile Include="ViewModels\ChangePlayerNameDialogViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\ChangePlayerNameDialogView.xaml.cs">
@@ -134,7 +141,6 @@
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\SticksHumanPlayer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <DependentUpon>Resources.resx</DependentUpon>
@@ -188,20 +194,10 @@
     <None Include="Properties\AppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Game\Game.csproj">
-      <Project>{836EF855-4A8D-4BE9-B057-51F939F85B3F}</Project>
-      <Name>Game</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools\Tools.csproj">
-      <Project>{37F91628-D4B2-4E32-A510-C01904F17810}</Project>
-      <Name>Tools</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Music\Developer.mp3" />
+    <Resource Include="Resources\Music\Game.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

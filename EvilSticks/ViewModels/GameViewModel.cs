@@ -1,11 +1,11 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using EvilSticks.Model;
+using EvilSticks.Tools;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
 using Game;
-using System;
-using System.Windows;
 using Tools;
 
 namespace EvilSticks.ViewModels
@@ -15,7 +15,7 @@ namespace EvilSticks.ViewModels
         public GameViewModel()
         {
             if (IsInDesignMode)
-                _game = new SticksGame(11, 1, new SticksHumanPlayer("Player"), new SticksAIPlayer("Bot", 0));
+                _game = new SticksGame(11, 1, new Player("Player"), new SticksAIPlayer("Bot", 0));
             else
             {
                 InitializeCommands();
@@ -26,7 +26,7 @@ namespace EvilSticks.ViewModels
 
         private void RegisterToMessages()
         {
-            Messenger.Default.Register<SticksHumanPlayer>(this, Tokens.PlayerNameChanged, (player) =>
+            Messenger.Default.Register<Player>(this, Tokens.PlayerNameChanged, (player) =>
             {
                 if (_humanPlayer == null)
                     _humanPlayer = player;
@@ -44,20 +44,22 @@ namespace EvilSticks.ViewModels
 
         #region Event Handlers
 
-        void OnGameEnded(object sender, GameEndedEventArgs e)
+        private void OnGameEnded(object sender, EventArgs e)
         {
-            MessageBox.Show(_game.CurrentPlayer.Name);
+            var winner = _game.CurrentPlayer;
+            var loser = winner == _game.FirstPlayer ? _game.SecondPlayer : _game.FirstPlayer;
+            Messenger.Default.Send<Tuple<Player, Player>>(new Tuple<Player, Player>(winner, loser), Tokens.GameEnded);
             IsGameAlive = false;
             RaisePropertyChanged("HumanPlayerWinsCount");
             RaisePropertyChanged("EducatedAIPlayerWinsCount");
         }
 
-        void OnGameStateChanged(object sender, GameStateChangedEventArgs e)
+        private void OnGameStateChanged(object sender, GameStateChangedEventArgs e)
         {
             RaisePropertyChanged("SticksCount");
         }
 
-        void OnMoveRequested(object sender, EventArgs e)
+        private void OnMoveRequested(object sender, EventArgs e)
         {
             RaisePropertyChanged("IsFirstPlayerTurn");
             (RemoveSticksCommand as RelayCommand<string>).RaiseCanExecuteChanged();
@@ -143,7 +145,8 @@ namespace EvilSticks.ViewModels
         {
             NewGameCommand = new RelayCommand(() =>
             {
-                _game = new SticksGame(11, DataHelper.GetRandomElement(0, 1), _humanPlayer, _educatedAIPlayer);
+                Messenger.Default.Send<Tokens, EducationViewModel>(Tokens.GameStarted);
+                _game = new SticksGame(11, CollectionExtensions.GetRandomElement(0, 1), _humanPlayer, _educatedAIPlayer);
                 _game.GameStateChanged += OnGameStateChanged;
                 _game.GameEnded += OnGameEnded;
                 _game.MoveRequested += OnMoveRequested;
@@ -169,7 +172,7 @@ namespace EvilSticks.ViewModels
                 _game.CurrentPlayer.OnMoveMade(sticksToRemoveCount);
             }, (param) =>
             {
-                return _game != null ? _game.CurrentPlayer is SticksHumanPlayer : false; 
+                return _game != null ? _game.CurrentPlayer == _humanPlayer : false; 
             });
 
         }
@@ -179,7 +182,7 @@ namespace EvilSticks.ViewModels
         #region Private Fields
 
         private SticksGame _game;
-        private SticksHumanPlayer _humanPlayer;
+        private Player _humanPlayer;
         private SticksAIPlayer _educatedAIPlayer;
 
         #endregion

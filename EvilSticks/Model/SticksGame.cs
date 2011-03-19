@@ -2,7 +2,7 @@
 
 namespace EvilSticks.Model
 {
-    public sealed class SticksGame : TwoPlayerGame
+    public sealed class SticksGame : TwoPlayersTurnBasedGame
     {
         public SticksGame(int sticksCount, int currentPlayerIndex, Player firstPlayer, Player secondPlayer)
             : base(currentPlayerIndex, firstPlayer, secondPlayer)
@@ -11,15 +11,17 @@ namespace EvilSticks.Model
         }
 
         public int SticksCount { get; private set; }
-        
-        protected override void OnGameStateChanging(object move)
+
+        protected override void UpdateGameState(object move)
         {
             SticksCount -= (int)move;
+            if (SticksCount <= 0)
+            {
+                FirstPlayer.State = IsFirstPlayerTurn ? PlayerInGameState.Win : PlayerInGameState.Lose;
+                SecondPlayer.State = IsFirstPlayerTurn ? PlayerInGameState.Lose : PlayerInGameState.Win;
+            }
         }
 
-        protected override bool AreWinConditionsPerformed()
-        {
-            return SticksCount <= 0;
-        }
+        protected override void OnGameEnding() { }
     }
 }

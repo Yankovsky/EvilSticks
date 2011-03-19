@@ -6,24 +6,6 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        mc:Ignorable="d"
                        d:DesignHeight="400" d:DesignWidth="600" >
-    <toolkit:BusyIndicator.BusyContentTemplate>
-        <DataTemplate>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding FirstAIPlayer}" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Left" />
-                    <TextBlock Grid.Row="0" Text="Bots Duel" Style="{StaticResource TextBlockStyle}" HorizontalAlignment="Right" />
-                </Grid>
-            </Grid>
-        </DataTemplate>
-    </toolkit:BusyIndicator.BusyContentTemplate>
     <toolkit:BusyIndicator.OverlayStyle>
         <Style TargetType="Rectangle">
             <Setter Property="Fill" Value="Black"/>

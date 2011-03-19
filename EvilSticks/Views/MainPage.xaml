@@ -12,35 +12,40 @@
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
     <Border Style="{StaticResource MainAreaStyle}" >
-        <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" >
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
                 <Grid Grid.Row="0" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Row="0" >
-                        <MediaElement Volume="{Binding ElementName=VolumeSlider, Path=Value}" AutoPlay="True"
-                                      Source="/EvilSticks;component/Resources/Music/Developer.mp3" />
-                        <Slider Width="100" Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.5" />
-                    </Grid>
-                    <controls:Divider Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" />
-                    <TextBlock Grid.Column="2" Text="Sticks" Style="{StaticResource HeaderStyle}" />
-                    <controls:Divider Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Left" />
-                    <Grid Grid.Column="4" >
-                        <Button Content="Change Name" Command="{Binding ChangePlayerNameCommand}" />
-                    </Grid>
+                    <MediaElement Volume="{Binding ElementName=VolumeSlider, Path=Value}" AutoPlay="True"
+                                  Source="/EvilSticks;component/Resources/Music/Game.mp3" />
+                    <Slider Width="100" Name="VolumeSlider" Minimum="0" Maximum="1" Value="0.5" />
                 </Grid>
-                <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />
-                <Grid Grid.Row="2">
+                <controls:Divider Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Right" />
+                <TextBlock Grid.Column="2" Text="Sticks" Style="{StaticResource HeaderStyle}" />
+                <controls:Divider Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Left" />
+                <Grid Grid.Column="4" >
+                    <Button Content="Change Name" Command="{Binding ChangePlayerNameCommand}" />
+                </Grid>
+            </Grid>
+            <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />
+            <toolkit:BusyIndicator IsBusy="{Binding IsBusy}" Grid.Row="2" >
+                <toolkit:BusyIndicator.OverlayStyle>
+                    <Style TargetType="Rectangle" >
+                        <Setter Property="Fill" Value="Black" />
+                    </Style>
+                </toolkit:BusyIndicator.OverlayStyle>
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -50,7 +55,7 @@
                     <controls:Divider Grid.Column="1" />
                     <views:GameView Grid.Column="2" d:DataContext="{Binding Game, Source={StaticResource Locator}}" />
                 </Grid>
-            </Grid>
-        </toolkit:BusyIndicator>
+            </toolkit:BusyIndicator>
+        </Grid>
     </Border>
 </UserControl>

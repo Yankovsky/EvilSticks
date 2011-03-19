@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
-using EvilSticks.Model;
+using Game;
 
 namespace EvilSticks.Views
 {
@@ -9,7 +9,7 @@ namespace EvilSticks.Views
         public ChangePlayerNameDialogView()
         {
             InitializeComponent();
-            Messenger.Default.Register<SticksHumanPlayer>(this, Tokens.PlayerNameChanged, (player) =>
+            Messenger.Default.Register<Player>(this, Tokens.PlayerNameChanged, (player) =>
             {
                 Close();
             });

@@ -4,6 +4,7 @@ using EvilSticks.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Messaging;
+using Game;
 
 namespace EvilSticks.ViewModels
 {
@@ -11,7 +12,7 @@ namespace EvilSticks.ViewModels
     {
         public MainViewModel()
         {
-            _player = new SticksHumanPlayer("Unnamed");
+            _player = new Player("Unnamed");
             InitializeCommands();
             RegisterToMessages();
         }
@@ -30,7 +31,6 @@ namespace EvilSticks.ViewModels
             });
             Messenger.Default.Register<SticksAIPlayer>(this, Tokens.EducationEnded, (player) =>
             {
-                MessageBox.Show(player.Name + " win!");
                 IsBusy = false;
             });
         }
@@ -64,7 +64,7 @@ namespace EvilSticks.ViewModels
         {
             ChangePlayerNameCommand = new RelayCommand(() =>
             {
-                Messenger.Default.Send<SticksHumanPlayer, MainPage>(_player);
+                Messenger.Default.Send<Player, MainPage>(_player);
             });
         }
 
@@ -72,7 +72,7 @@ namespace EvilSticks.ViewModels
 
         #region Private Fields
 
-        private SticksHumanPlayer _player;
+        private Player _player;
 
         #endregion
 
