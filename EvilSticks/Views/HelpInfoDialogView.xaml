@@ -1,0 +1,34 @@
+﻿<sdk:ChildWindow x:Class="EvilSticks.Views.HelpInfoDialogView"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="521" d:DesignWidth="801">
+    <TextBlock TextWrapping="Wrap" Width="450">            
+        There are 11 sticks.        
+        <LineBreak/>
+        You must strategize to select one or two sticks to remove at a time.
+        <LineBreak/>
+        You will be alternating turns with the computer.
+        <LineBreak/>
+        The object of the game is to remove (grab) the last stick.
+        <LineBreak/>
+        Computer use a simple algorithm(kind of neural network) to study."
+        <LineBreak/>
+        <LineBreak/>               
+        At first he makes random desicions.
+        <LineBreak/>
+        But the more he will play games, the closer he will be to optimal strategy.
+        <LineBreak/>
+        You can use Education panel at left for make a tournament betweeen to computer players.
+        <LineBreak/>
+        The winner of contest will be your opponent.
+        <LineBreak/>
+        Try for example 1, 200 and 500 games and feel a diference.
+        <LineBreak/>
+        <LineBreak/>               
+        Thanks to Ozzy
+        <LineBreak/>
+        Yankovsky Andrey
+        <LineBreak/>
+        YankovskyAndrey@gmail.com"
+    </TextBlock>
+</sdk:ChildWindow>

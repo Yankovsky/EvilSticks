@@ -4,6 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:EvilSticks.Converters"
+             xmlns:usefulControls="clr-namespace:UsefulControls;assembly=UsefulControls"
              xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
              mc:Ignorable="d" >
     <Application.Resources>
@@ -12,8 +13,8 @@
                 <ResourceDictionary Source="Skins/MainSkin.xaml" />
                 <ResourceDictionary>
                     <converters:IntToArrayConverter x:Key="IntToArrayConverter" />
-                    <converters:TrueToVisibilityConverter x:Key="TrueToVisibilityConverter" />
-                    <converters:FalseToVisibilityConverter x:Key="FalseToVisibilityConverter" />
+                    <usefulControls:TrueToVisibilityConverter x:Key="TrueToVisibilityConverter" />
+                    <usefulControls:FalseToVisibilityConverter x:Key="FalseToVisibilityConverter" />
                     <!--Global View Model Locator-->
                     <viewModels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
                 </ResourceDictionary>

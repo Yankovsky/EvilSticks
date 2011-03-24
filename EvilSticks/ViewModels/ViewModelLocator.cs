@@ -1,8 +1,7 @@
 ﻿using GalaSoft.MvvmLight;
 
 namespace EvilSticks.ViewModels
-{
-    
+{    
     public class ViewModelLocator
     {
         private static MainViewModel _main;

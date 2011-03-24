@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using EvilSticks.Tools;
+using System.Windows.Controls.Primitives;
 
 namespace EvilSticks
 {
@@ -43,6 +44,12 @@ namespace EvilSticks
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             Messenger.Default.Send<Tokens, MainViewModel>(Tokens.MainPageLoaded);
-        }        
+        }
+
+        private void Help_Click(object sender, RoutedEventArgs e)
+        {
+            var dialog = new HelpInfoDialogView();
+            dialog.Show();
+        }
     }
 }

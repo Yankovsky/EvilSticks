@@ -7,6 +7,7 @@
         PlayerNameChanged,
         MainPageLoaded,
         GameStarted,
-        GameEnded
+        GameEnded,
+        HelpInfoRequested
     }
 }

@@ -62,15 +62,20 @@ namespace EvilSticks.Model
             foreach (var boxNumber in _movesIndexHistory.Keys)
             {
                 var moveIndex = _movesIndexHistory[boxNumber];
+                var move = _boxes[boxNumber][moveIndex];
+                var invertMove = move == 1 ? 2 : 1;
 
                 if (this == Game.CurrentPlayer) // CurrentPlayer == Winner
                 {
-                    _boxes[boxNumber].Add(_boxes[boxNumber][moveIndex]);
+                    if (_boxes[boxNumber].Contains(invertMove))
+                    {
+                        var wrongMoveIndex = _boxes[boxNumber].IndexOf(invertMove);
+                        _boxes[boxNumber][wrongMoveIndex] = move;
+                    }
                 }
                 else
                 {
-                    var rightValue = _boxes[boxNumber][moveIndex] == 1 ? 2 : 1;
-                    _boxes[boxNumber][moveIndex] = rightValue;
+                    _boxes[boxNumber][moveIndex] = invertMove;
                 }
             }
         }

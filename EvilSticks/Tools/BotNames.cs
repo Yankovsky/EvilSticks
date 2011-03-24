@@ -16,7 +16,7 @@ namespace EvilSticks.Tools
         }
 
         private static Random _random = new Random();
-        private static string[] _names = new string[] { "IVAN", "Gaddafi", "MedvePut", "Obama", "Terminator", "Anfisa", "Agata", "Lada", "Avdotya", "Stepa" };
+        private static string[] _names = new string[] { "IVAN", "MedvePut", "Obama", "Terminator", "Anfisa", "Agata", "Lada", "Avdotya", "Stepa" };
         private static string[] _modificators = new string[] { "-2000", "~Me", " XP", " 4G", ".NET", ".ru", "7", "1.1", " №1", "(C)", "+", "666", "777", ".AI", ".Bot" };
         private static int _namesCount;
         private static int _modificatorsCount;

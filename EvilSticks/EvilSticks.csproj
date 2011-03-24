@@ -108,13 +108,14 @@
     <Reference Include="Tools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Libs\Tools.dll</HintPath>
     </Reference>
+    <Reference Include="UsefulControls">
+      <HintPath>..\Libs\UsefulControls.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\BotsDuelBusyIndicator.xaml.cs">
       <DependentUpon>BotsDuelBusyIndicator.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\FalseToVisibilityConverter.cs" />
-    <Compile Include="Converters\TrueToVisibilityConverter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -137,6 +138,9 @@
     </Compile>
     <Compile Include="Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HelpInfoDialogView.xaml.cs">
+      <DependentUpon>HelpInfoDialogView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -180,6 +184,10 @@
     <Page Include="Views\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\HelpInfoDialogView.xaml">
+      <SubType>Form</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>

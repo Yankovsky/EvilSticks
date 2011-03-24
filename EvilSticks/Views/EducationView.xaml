@@ -14,7 +14,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" HorizontalAlignment="Right" >
             <TextBlock Grid.Column="0" Text="Games count" Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center" />
             <input:NumericUpDown Grid.Column="1" Margin="5" Foreground="GhostWhite" Value="{Binding TotalEducationalGamesCount, Mode=TwoWay}"
-                                 Minimum="1" Maximum="1000" Increment="50" Width="100"  />
+                                 Minimum="1" Maximum="500" Increment="50" Width="100"  />
             <Button Grid.Column="2" Content="Run" Style="{StaticResource RoundButtonStyle}" Command="{Binding RunEducationalGamesCommand}" />
         </StackPanel>
         <controls:Divider Grid.Row="1" HorizontalAlignment="Stretch" />

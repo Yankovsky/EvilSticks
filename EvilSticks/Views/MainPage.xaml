@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="clr-namespace:EvilSticks.Controls"
              xmlns:toolkit="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Toolkit"
+             xmlns:toolkitInput="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              xmlns:evilSticksControls="clr-namespace:EvilSticks.Controls"
              xmlns:views="clr-namespace:EvilSticks.Views"
              xmlns:viewModels="clr-namespace:EvilSticks.ViewModels"
@@ -11,6 +12,11 @@
              mc:Ignorable="d"
              d:DesignHeight="400" d:DesignWidth="600"
              DataContext="{Binding Main, Source={StaticResource Locator}}" >
+    <toolkitInput:ContextMenuService.ContextMenu>
+        <toolkitInput:ContextMenu>
+            <toolkitInput:MenuItem Header="Help" Click="Help_Click" />
+        </toolkitInput:ContextMenu>
+    </toolkitInput:ContextMenuService.ContextMenu>
     <Border Style="{StaticResource MainAreaStyle}" >
         <Grid>
             <Grid.RowDefinitions>

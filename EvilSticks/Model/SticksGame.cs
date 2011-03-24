@@ -4,6 +4,8 @@ namespace EvilSticks.Model
 {
     public sealed class SticksGame : TwoPlayersTurnBasedGame
     {
+        #region Public Interface
+
         public SticksGame(int sticksCount, int currentPlayerIndex, Player firstPlayer, Player secondPlayer)
             : base(currentPlayerIndex, firstPlayer, secondPlayer)
         {
@@ -11,6 +13,10 @@ namespace EvilSticks.Model
         }
 
         public int SticksCount { get; private set; }
+
+        #endregion
+
+        #region Override
 
         protected override void UpdateGameState(object move)
         {
@@ -23,5 +29,7 @@ namespace EvilSticks.Model
         }
 
         protected override void OnGameEnding() { }
+
+        #endregion
     }
 }
